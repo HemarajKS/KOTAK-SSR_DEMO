@@ -19,6 +19,13 @@ export default function Root({ children }: { children: React.ReactNode }) {
                 ],
                 timestamp: new Date().toISOString()
               })};
+              fetch('/api/about')
+                .then(res => res.json())
+                .then(data => {
+                  window.__ABOUT_DATA__ = data;
+                  window.dispatchEvent(new Event('aboutDataLoaded'));
+                })
+                .catch(err => console.error('Failed to load about data:', err));
             `,
           }}
         />
